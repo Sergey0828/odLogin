@@ -1,0 +1,7 @@
+{
+  "name": "odLogin",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
