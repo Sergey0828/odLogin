@@ -5,7 +5,7 @@
         <ion-icon slot="icon-only" name="log-out"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Dashboard</ion-title>
+    <ion-title>Add Expenses</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -19,18 +19,36 @@
     <ion-icon name="heart"></ion-icon>
     <ion-icon name="heart"></ion-icon>
   </ion-item>
+
   <form #form="ngForm" (ngSubmit)="senddata(form)" method="post">
+    <ion-list>
+      <ion-list-header>
+        <ion-label>
+          Select Product
+        </ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-label>Product</ion-label>
+        <ion-select ngModel name="product" (ionChange)="onProductChange($event)" value="" okText="Okay" cancelText="Dismiss">
+          <ion-select-option *ngFor="let item of products" value="{{item.id}}">{{item.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
     <ion-item>
-      <ion-label position="floating">User Name:</ion-label>
-      <ion-input ngModel name="username"></ion-input>
+      <ion-label position="floating">Description:</ion-label>
+      <ion-input [(ngModel)]="currentProduct.description" name="description" type="text"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">PhoneNumber:</ion-label>
-      <ion-input ngModel name="phonenumber"></ion-input>
+      <ion-label position="floating">Unit Price:</ion-label>
+      <ion-input [(ngModel)]='currentProduct.price' (input)="onChangeUnitePrice($event)" name="price" placeholder="0.0" type="number"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Address:</ion-label>
-      <ion-input ngModel name="address"></ion-input>
+      <ion-label position="floating">Quantity:</ion-label>
+      <ion-input [(ngModel)]="currentProduct.quantity" (input)="onChangeQuantity($event)" name="quantity" placeholder="0" type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Total:</ion-label>
+      <ion-input [(ngModel)]="currentProduct.expense" name="expense" placeholder="0.00" readonly></ion-input>
     </ion-item>
     <ion-button type="submit" expand="block">Save</ion-button>
   </form>

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EnvService } from './env.service';
 import { Storage } from '@ionic/storage';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, tap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +27,7 @@ export class SenddataService {
    }
 
 
-  senddata(username: String, phonenumber: String, address: String){
+  senddata(product: any){
     var headers = new HttpHeaders();
     headers.append("Accept", "application/json");
     headers.append("Content-Type", "application/json");
@@ -36,28 +38,44 @@ export class SenddataService {
       database: this.env.ODOO_DATABASE,
       username: this.email,
       password: this.password,
-      model: 'res.users', //'my.odoo.model',
-      method: 'read', // 'my_odoo_method',
+      model: 'xxx_test_module.course', 
+      method: 'save_expense',
       options: {
-        id: "*"
-        // username: username,
-        // phonenumber: phonenumber,
-        // address: address
+        product: product,
       }
     }
-    
-    
 
     return  this.http.post(this.env.PROXY_URL + this.env.API_URL + "api/call_kw",
       JSON.stringify(postData), {headers: headers} )
       .subscribe( data => {
-        console.log(data);
+        alert(data['response']);
       });
       
 
   }
 
+  loadProduct(username: String, password: String): Observable<any> {
+    var headers = new HttpHeaders();
+    headers.append("Accept", "application/json");
+    headers.append("Content-Type", "application/json");
 
+    
+      let postData = {
+        host: this.env.ODOO_HOST,
+        port: this.env.ODOO_PORT,
+        database: this.env.ODOO_DATABASE,
+        username: username,
+        password: password,
+        model: 'xxx_test_module.course',
+        method: 'get_products',
+        options: {
+        }
+      }
+    return  this.http.post(this.env.PROXY_URL + this.env.API_URL + "api/call_kw",
+        JSON.stringify(postData), {headers: headers} )
+        .pipe(
+        );
+  }
 
 
 }

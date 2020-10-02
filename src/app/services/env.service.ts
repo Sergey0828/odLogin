@@ -12,7 +12,7 @@ export class EnvService {
   ODOO_DATABASE = "mydb";
 
   // API_URL = 'http://192.168.107.163:8080/';
-  API_URL = 'http://e2a82aaf0922.ngrok.io/';
+  API_URL = 'http://85877d91e1fe.ngrok.io/';
   
   constructor() { }
 }
